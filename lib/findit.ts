@@ -7,7 +7,7 @@ export function matches(query:string, text:string) { const q=terms(query), value
 export function searchPhotos(photos:Photo[],query:string,location="All locations") {
   return photos.filter(p=>location==="All locations"||p.location===location).map(p=>({photo:p,matches:query.trim()?p.items.filter(i=>matches(query,i.label+" "+p.location+" "+p.notes)):p.items})).filter(r=>!query.trim()||r.matches.length>0||matches(query,r.photo.location+" "+r.photo.notes));
 }
-export const samplePhoto: Photo = { id:"sample-desk",location:"Home office · Desk",notes:"Illustrative sample photo with manually labeled items. Your photos are kept separately.",width:1536,height:1024,createdAt:"",imageUrl:"/demo-desk.jpg",sample:true,items:[
+export const samplePhoto: Photo = { id:"sample-desk",location:"Home office · Desk",notes:"Illustrative sample photo with manually labeled items. Your photos are kept separately.",width:1536,height:1024,createdAt:"",imageUrl:`${import.meta.env.BASE_URL}demo-desk.jpg`,sample:true,items:[
  {id:"sample-remote",label:"Remote control",box:[.047,.564,.211,.384],source:"sample"},
  {id:"sample-book",label:"Green notebook",box:[.177,.166,.262,.547],source:"sample"},
  {id:"sample-phone",label:"Black phone",box:[.481,.309,.168,.376],source:"sample"},

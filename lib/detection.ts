@@ -5,7 +5,7 @@ export async function detectItems(image: HTMLImageElement):Promise<Item[]> {
     const tf=await import("@tensorflow/tfjs");
     await tf.ready();
     const coco=await import("@tensorflow-models/coco-ssd");
-    return coco.load({base:"lite_mobilenet_v2",modelUrl:"/models/coco/model.json"});
+    return coco.load({base:"lite_mobilenet_v2",modelUrl:new URL(`${import.meta.env.BASE_URL}models/coco/model.json`, document.baseURI).href});
   })().catch(e=>{modelPromise=null;throw e});
   const model=await modelPromise;
   const result=await model.detect(image,35,0.45);
