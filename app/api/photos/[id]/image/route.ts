@@ -1,0 +1,2 @@
+import { ApiError, apiError, identity, ownedPhoto, storage } from "@/lib/storage";
+export async function GET(request:Request,context:{params:Promise<{id:string}>}){try{const owner=identity(request),{id}=await context.params;const row=await ownedPhoto(id,owner),object=await storage().bucket.get(row.object_key);if(!object)throw new ApiError(404,"This photo is no longer available.");return new Response(object.body,{headers:{"Content-Type":row.content_type,"Cache-Control":"private, no-store","X-Content-Type-Options":"nosniff"}});}catch(e){return apiError(e)}}
