@@ -1,7 +1,7 @@
 import {readFile} from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import ts from 'typescript';
-const source=await readFile(new URL('../lib/findit.ts',import.meta.url),'utf8');
+const source=(await readFile(new URL('../lib/findit.ts',import.meta.url),'utf8')).replaceAll('import.meta.env.BASE_URL', JSON.stringify('./'));
 const js=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext}}).outputText;
 const {searchPhotos,samplePhoto}=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
 for(const [query,wanted] of [['Where is my remote?','Remote control'],['mug','Blue mug'],['cup','Blue mug'],['charger','White charging cable'],['phone','Black phone'],['notebook','Green notebook'],['scissors','Scissors']]){
